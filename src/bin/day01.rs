@@ -9,9 +9,12 @@ fn main() {
             0
         } else {
             acc + line.parse::<i32>().unwrap()
-        }
+        };
     });
     println!("Max calories: {}", counts.iter().last().unwrap());
 
-    println!("Three most calories: {}", counts.iter().rev().take(3).sum::<i32>());
+    println!(
+        "Three most calories: {}",
+        counts.iter().rev().take(3).sum::<i32>()
+    );
 }

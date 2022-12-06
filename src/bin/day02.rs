@@ -10,9 +10,7 @@ fn main() {
 fn part_2(input: &str) {
     let total_score = input.lines().fold(0, |total_score, line| {
         let mut score = 0;
-        let actions = line
-            .split_whitespace()
-            .collect::<Vec<&str>>();
+        let actions = line.split_whitespace().collect::<Vec<&str>>();
         let action = str::parse(&actions[0]).unwrap();
         let outcome = str::parse(&actions[1]).unwrap();
         score += get_points_for_set_outcome(&action, &outcome);
@@ -37,29 +35,24 @@ fn part_1(input: &str) {
 }
 
 fn get_points_for_set_outcome(other_action: &Action, outcome: &Outcome) -> u32 {
-    outcome.get_value() + match outcome {
-        Outcome::Win => {
-            match other_action {
+    outcome.get_value()
+        + match outcome {
+            Outcome::Win => match other_action {
                 Action::Rock => Action::Paper.get_value(),
                 Action::Paper => Action::Scissors.get_value(),
                 Action::Scissors => Action::Rock.get_value(),
-            }
-        }
-        Outcome::Lose => {
-            match other_action {
+            },
+            Outcome::Lose => match other_action {
                 Action::Rock => Action::Scissors.get_value(),
                 Action::Paper => Action::Rock.get_value(),
                 Action::Scissors => Action::Paper.get_value(),
-            }
-        }
-        Outcome::Draw => {
-            match other_action {
+            },
+            Outcome::Draw => match other_action {
                 Action::Rock => Action::Rock.get_value(),
                 Action::Paper => Action::Paper.get_value(),
                 Action::Scissors => Action::Scissors.get_value(),
-            }
+            },
         }
-    }
 }
 
 fn get_outcome_for_actions(other_action: &Action, own_action: &Action) -> Outcome {
