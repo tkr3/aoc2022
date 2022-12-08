@@ -63,13 +63,13 @@ fn part_2(input: &str) -> String {
 
 fn setup_stacks(initial: &[&str]) -> Vec<Vec<char>> {
     let mut stacks = vec![Vec::new(); 9];
-    initial.into_iter().for_each(|&line| {
+    for &line in initial {
         for (i, c) in line[1..=line.len() - 1].chars().step_by(4).enumerate() {
             if c.is_ascii_uppercase() {
                 stacks[i].push(c);
             }
         }
-    });
+    }
     for s in stacks.iter_mut() {
         s.reverse();
     }
