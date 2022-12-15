@@ -1,7 +1,4 @@
-use std::{
-    cmp::Reverse,
-    collections::{BTreeMap, BinaryHeap, HashMap},
-};
+use std::collections::{BTreeMap, HashMap, VecDeque};
 
 fn main() {
     let input = include_str!("../../inputs/day12.txt");
@@ -142,11 +139,11 @@ where
     N: Fn(&Point) -> Vec<Point>,
 {
     let mut costs = BTreeMap::new();
-    let mut queue = BinaryHeap::new();
+    let mut queue = VecDeque::new();
     costs.insert(start.clone(), (0, start.clone()));
-    queue.push(Reverse(start.clone()));
+    queue.push_front(start.clone());
 
-    while let Some(Reverse(node)) = queue.pop() {
+    while let Some(node) = queue.pop_front() {
         let (cost, _) = *costs.get(&node).unwrap();
         if node == goal {
             return Ok((costs, cost));
@@ -156,7 +153,7 @@ where
             let new_cost = cost + 1;
             if &new_cost < &costs.get(&neighbor).get_or_insert(&(i32::MAX, node)).0 {
                 costs.insert(neighbor, (new_cost, node));
-                queue.push(Reverse(neighbor));
+                queue.push_back(neighbor);
             }
         }
     }
